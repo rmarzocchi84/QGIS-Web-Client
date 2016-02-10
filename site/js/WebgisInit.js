@@ -764,7 +764,10 @@ function postLoading() {
 		geoExtMap.map.events.register('mousemove', this, function (evt) {
 			var xy = geoExtMap.map.events.getMousePosition(evt);
 			var geoxy = geoExtMap.map.getLonLatFromPixel(xy);
-			var nDeci = 0;
+			// by default use  WGS84 CRS (5 decimal)
+			var proj = new OpenLayers.Projection("EPSG:4326");
+			geoxy.transform(geoExtMap.map.getProjectionObject(),proj);
+			var nDeci = 5;
 			var currentScale = geoExtMap.map.getScale();
 			if (currentScale <= 400) {
 				nDeci = 1;
